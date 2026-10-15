@@ -8,23 +8,25 @@ An MCP server that connects an MCP-compatible client to a running ArcMap install
 - Python 3.10 or newer for this MCP server
 - [uv](https://docs.astral.sh/uv/getting-started/installation/)
 - An MCP-compatible client, such as Visual Studio Code with MCP support
-- The companion ArcMap MCP Add-In installed and running in ArcMap
+- The ArcGeek Tools Add-In for ArcMap, installed and running
 
-The ArcMap Add-In is not included in this repository. Install it separately, open ArcMap, and use its **Start MCP Server** toolbar button before connecting an MCP client. The server connects to `127.0.0.1:27173` by default.
+## ArcGeek Tools Add-In
 
-## Installation
+The ArcMap-side Add-In is distributed by [ArcGeek (Franz Pucha-Cofrep)](https://arcgeek.com/arcprotools) as a separate installer; this repository does not mirror the installer. For ArcMap 10.4-10.8 (32-bit), download the official v1.0.1 .esriAddIn from the [ArcGeek ArcMap download page](https://arcgeek.com/arcprotools/free_download.php?product=arcmap). Double-click the downloaded file, accept ArcMap's Add-In installation prompt, open ArcMap, and start the server from the ArcGeek toolbar.
 
-1. Clone this repository and install its dependencies:
+ArcGeek Tools offers a trial and requires a license after the trial. Its hydrology and raster tools require the ArcGIS Spatial Analyst extension. See the official [ArcGeek Tools page](https://arcgeek.com/arcprotools) for current download, licensing, and support details.
 
-   ```powershell
-   git clone https://github.com/aptana/ArcMap-MCP.git
-   cd ArcMap-MCP
-   uv sync
-   ```
+The MCP server in this repository connects to the running ArcMap Add-In at `127.0.0.1:27173` by default. Install and start the Add-In before connecting an MCP client.
 
-2. Install and enable the companion ArcMap MCP Add-In in ArcMap. Start its MCP server from the Add-In toolbar and keep ArcMap open.
+## Install the MCP Server
 
-3. Configure your MCP client.
+Clone this repository and install its dependencies:
+
+```powershell
+git clone https://github.com/aptana/ArcMap-MCP.git
+cd ArcMap-MCP
+uv sync
+```
 
 ## Configure Visual Studio Code
 
@@ -57,7 +59,7 @@ From the repository directory, run:
 uv run arcgis_mcp_server.py
 ```
 
-The MCP server uses standard input/output (stdio) for client communication. Separately, it connects to the ArcMap Add-In over TCP on `127.0.0.1:27173`. Set the `ARCGIS_MCP_PORT` environment variable before starting the server if the Add-In is configured to use a different port:
+The MCP server uses standard input/output (stdio) for client communication. Separately, it connects to the ArcMap Add-In over TCP on `127.0.0.1:27173`. Set `ARCGIS_MCP_PORT` before starting the server if the Add-In is configured to use another port:
 
 ```powershell
 $env:ARCGIS_MCP_PORT = "27174"
@@ -85,7 +87,7 @@ Use the same port value in the Add-In and in `ARCGIS_MCP_PORT`.
 
 ## Troubleshooting
 
-- **Cannot connect to ArcMap:** Confirm ArcMap is open and the Add-In's **Start MCP Server** toolbar button is active.
+- **Cannot connect to ArcMap:** Confirm ArcMap is open and the ArcGeek toolbar's **Start MCP Server** button is active.
 - **Connection refused:** Confirm both components use the same port. The default is `27173`; `ARCGIS_MCP_PORT` changes the MCP server's destination port.
 - **Dependency errors:** Run `uv sync` from the repository root and restart the MCP server.
 - **`execute_code` errors:** Use Python 2.7-compatible syntax and explicit `.mxd` paths with `arcpy.mapping.MapDocument`.
