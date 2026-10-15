@@ -1,0 +1,8 @@
+[project]
+name = "arcgis-arcmap-mcp"
+version = "1.0.0"
+description = "MCP Server for interacting with ArcGIS 10.x (ArcMap)"
+requires-python = ">=3.10"
+dependencies = [
+    "mcp>=1.2.1",
+]
